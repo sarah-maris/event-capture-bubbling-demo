@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Event Listener Examples</title>
+  <style>
+    button {
+      background-color: teal;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      display: block;
+      margin: 40px auto;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <main id="main">
+    <div id="div">
+      <button id="button">Click Me!</button>
+    </div>
+  </main>
+  <aside>
+    <ol id="results"></ol>
+  </aside>
+  <script>
+    const results = document.getElementById('results');
+
+    // Capture...
+    document.addEventListener('click', function(evt) {
+      document.getElementsByTagName('ol')[0].innerHTML += '<hr>';
+      addResult(this.nodeName, 'capture', evt.target.nodeName)
+    }, true);
+    document.getElementsByTagName('body')[0].addEventListener('click', function(evt) {
+      addResult(this.nodeName, 'capture', evt.target.nodeName)
+    }, true);
+    document.getElementById('main').addEventListener('click', function(evt) {
+      addResult(this.nodeName, 'capture', evt.target.nodeName)
+    }, true);
+    document.getElementById('button').addEventListener('click', function(evt) {
+      addResult(this.nodeName, 'capture', evt.target.nodeName)
+    }, true);
+
+    // Bubbling...
+    document.addEventListener('click', function(evt) {
+      addResult(this.nodeName, 'bubbling', evt.target.nodeName)
+    });
+    document.getElementsByTagName('body')[0].addEventListener('click', function(evt) {
+      addResult(this.nodeName, 'bubbling', evt.target.nodeName)
+    });
+    document.getElementById('main').addEventListener('click', function(evt) {
+      addResult(this.nodeName, 'bubbling', evt.target.nodeName)
+    });
+    document.getElementById('button').addEventListener('click', function(evt) {
+      addResult(this.nodeName, 'bubbling', evt.target.nodeName)
+    });
+
+    // Post results
+    function addResult(el, phase, target) {
+      const result = document.createElement('li');
+      result.innerHTML = `${el} clicked -- phase: <strong>${phase}</strong> -- target:  ${target}`;
+      results.appendChild(result);
+    }
+  </script>
+</body>
+
+</html>
